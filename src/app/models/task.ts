@@ -17,8 +17,10 @@ export interface Task{
     created_at: string;
     due: string;
     url: string;
+    
 }
-export interface NewTask{
-    content: string;
-
-}
+export class EditableTask {
+    constructor(
+      public content: string,
+    ) {}
+  }

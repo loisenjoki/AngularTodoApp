@@ -44,26 +44,19 @@
 
 
   <ul>
-    <li *ngFor="let item of tasks">
-      {{item.content}}
-      <button class="btn" (click)="editable = !editable">Edit</button>
-      <button class="btn btn-warn" (click)="remove(item.id)">Delete</button>
+    <li *ngFor="let item of tasks; let i = index">
+      <div *ngIf="editingIndex !== i">
+        {{item.content}}
+        <button (click)="editItem(i)">Edit</button>
+        <button  (click)="remove(item.id)">Delete</button>
 
-    </li>
-    <div *ngIf="editable" ngFor="let ite">
-      <form #taskForm="ngForm" (ngSubmit)="editTask()">
-        <label>
-          Edit content:
-          <input type="text" class="sm-text-input" name="editItemInput" [(ngModel)]="editItemInput" #editedIte required>
-        </label>
-    
-  
-      <div class="btn-wrapper">
-        <button class="btn" (click)="editable = !editable">Cancel</button>
-        <button type="submit">Update task</button>
       </div>
-      </form>
-    </div>
+      <div *ngIf="editingIndex === i">
+        <input type="text" [(ngModel)]="editText" name="editText">
+        <button (click)="saveEditing(item.id)">Save</button>
+        <button (click)="cancelEditing()">Cancel</button>
+      </div>
+    </li>
   </ul>
   </mat-card>
 

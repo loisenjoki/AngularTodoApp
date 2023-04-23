@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from './models/task';
+import { EditableTask, Task } from './models/task';
 import { ApiService } from './services/api.service';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 
@@ -13,8 +13,9 @@ export class AppComponent implements OnInit {
   title = 'Angular Todo app';
   tasks: any[] | any;
   addItemInput!: string;
-  editItemInput!:string;
-  editable = false;
+  editingIndex = -1;
+  editText = '';
+
 
 
 
@@ -28,20 +29,25 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
      this.getallTasks();
-    // console.log(this.allTasks());
-    //this.allTasks:Task[] = this.task
 
   }
 
   getallTasks() {
-    this.apiconfig.getAllTasks()
-      .subscribe((data) => {
-        this.tasks = data;
+    this.apiconfig.getAllTasks();
+    this.apiconfig.data$.subscribe((
+      data)=> {
+         this.tasks = data;
+           console.log(this.tasks);
+    },
+      error => console.error(error)
+    );  
+      // .subscribe((data) => {
+      //   this.tasks = data;
          
-        console.log(this.tasks);
-      }, (error) => {
-        console.error(error);
-      });
+      //   console.log(this.tasks);
+      // }, (error) => {
+      //   console.error(error);
+      // });
   }
 
 
@@ -74,48 +80,44 @@ export class AppComponent implements OnInit {
       };
     console.log(newTask);
     this.apiconfig.createTasks(newTask).subscribe((response: Task) => {
-      console.log(response);
+      this.tasks.push(response);
+      console.log(this.tasks);
   })
   }
-  //Deteting  Task
-  remove(taskID: string) {
-    this.apiconfig.deleteTask(taskID).subscribe((response: Task) => {
-      console.log(response);
-  })
-   
-  }
-    //update   Task
-    editTask() {      
-      let items;
-      for (items of this.tasks);
-      console.log(items.id);
-    
-        const newTask: Task = {
-          content: this.editItemInput,
-          priority: 2,
-          completed: false,
-          id: '',
-          assigner_id: items.assigner_id,
-          assignee_id: items.assignee_id,
-          project_id: items.project_id,
-          section_id: items.section_id,
-          parent_id:items.parent_id,
-          order: 0,
-          description: '',
-          is_completed: false,
-          labels: [],
-          comment_count: 0,
-          creator_id: '',
-          created_at: '',
-          due: '',
-          url: ''
-        };
 
-      this.apiconfig.updateTasks( newTask ,items.id).subscribe((response: Task) => {
-        console.log(response);
-    })
-     
+      //edit task
+    editItem(index: number) {
+      this.editingIndex = index;
+      this.editText = this.tasks[index].content;
     }
+  
+    saveEditing(taskID: string) {
+      this.tasks[this.editingIndex].content = this.editText;
+      this.editingIndex = -1;
+      const editData = new EditableTask (
+        this.editText
+      )
+      this.apiconfig.updateTasks( editData ,taskID)
+      .subscribe((response: Task) => {
+            console.log(response);
+        })
+      
+      
+    }
+    cancelEditing() {
+      this.editingIndex = -1;
+      this.editText = '';
+    }
+
+      //Deteting  Task
+      remove(taskID: string) {
+        this.apiconfig.deleteTask(taskID).subscribe((response: Task) => {
+          this.getallTasks();
+
+          console.log(response);
+      })
+      
+      }
 
 
 }
