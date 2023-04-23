@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
   addItemInput!: string;
   editingIndex = -1;
   editText = '';
+  isChecked = 0;
+  selectedItems: Task[] = [];
 
 
 
@@ -54,30 +56,9 @@ export class AppComponent implements OnInit {
   addTask(form: NgForm) {
     if (form.valid) {
     }
-    let items;
-    for (items of this.tasks);
-    console.log(items.project_id);
-  
-      const newTask: Task = {
-        content: this.addItemInput,
-        priority: 2,
-        completed: false,
-        id: '',
-        assigner_id: items.assigner_id,
-        assignee_id: items.assignee_id,
-        project_id: items.project_id,
-        section_id: items.section_id,
-        parent_id:items.parent_id,
-        order: 0,
-        description: '',
-        is_completed: false,
-        labels: [],
-        comment_count: 0,
-        creator_id: '',
-        created_at: '',
-        due: '',
-        url: ''
-      };
+    const newTask = new EditableTask (
+      this.addItemInput
+    )
     console.log(newTask);
     this.apiconfig.createTasks(newTask).subscribe((response: Task) => {
       this.tasks.push(response);
@@ -116,8 +97,21 @@ export class AppComponent implements OnInit {
 
           console.log(response);
       })
-      
       }
+      //close reopen task
+      selectItem(item: Task, event: Event) {
+        const checkbox = event.target as HTMLInputElement
+        if(checkbox.checked){
+          this.apiconfig.closeTask(item.id).subscribe((response: Task) => {
+            this.getallTasks();
+            console.log(response);
+        })
+          //close task
 
+        }else{
+          //reopen task
+        }
+
+      }
 
 }

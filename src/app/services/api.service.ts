@@ -11,7 +11,7 @@ import { EditableTask, Task } from '../models/task';
 })
 export class ApiService {
   API_KEY = "887e23f9298ee74b7a89d69099420fc4cc9323e4"
-  public dataSubject = new BehaviorSubject<Task[]>([]);
+  private dataSubject = new BehaviorSubject<Task[]>([]);
   public data$ = this.dataSubject.asObservable();
 
   constructor(private http:HttpClient) { }
@@ -41,5 +41,12 @@ export class ApiService {
     console.log(item);
     return this.http.post<Task>(`https://api.todoist.com/rest/v2/tasks/${taskID}`, item, this.httpOptions);
   }
+  closeTask(taskID:string ): Observable<Task>{    
+    return this.http.post<Task>(`https://api.todoist.com/rest/v2/tasks/${taskID}/close`, this.httpOptions);
+  }
+  reopenTask(taskID:string ): Observable<Task>{
+    return this.http.post<Task>(`https://api.todoist.com/rest/v2/tasks/${taskID}/reopen`, this.httpOptions);
+  }
+  
 
 }
