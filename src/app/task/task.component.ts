@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 
-import { Task } from '../modules/task';
+import { Task } from '../models/task';
 
 @Component({
   selector: 'app-task',
@@ -8,6 +8,8 @@ import { Task } from '../modules/task';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
+
+  
 
 
   editable = false;
