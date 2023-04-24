@@ -1,5 +1,4 @@
 export interface Task{
-    completed:boolean;
     id: string;
     assigner_id: string;
     assignee_id: string;

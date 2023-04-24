@@ -42,6 +42,8 @@ export class ApiService {
     return this.http.post<Task>(`https://api.todoist.com/rest/v2/tasks/${taskID}`, item, this.httpOptions);
   }
   closeTask(taskID:string ): Observable<Task>{    
+    console.log(this.httpOptions);
+    
     return this.http.post<Task>(`https://api.todoist.com/rest/v2/tasks/${taskID}/close`, this.httpOptions);
   }
   reopenTask(taskID:string ): Observable<Task>{
