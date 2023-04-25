@@ -18,15 +18,6 @@ export class AppComponent implements OnInit {
   isChecked = 0;
   selectedItems: Task[] = [];
 
-
-
-
-
-  filter: 'all' | 'uncomplete' | 'completed' = 'all';
-
- 
-
-
   constructor(private apiconfig:ApiService){}
 
   ngOnInit() {
@@ -43,19 +34,11 @@ export class AppComponent implements OnInit {
     },
       error => console.error(error)
     );  
-      // .subscribe((data) => {
-      //   this.tasks = data;
-         
-      //   console.log(this.tasks);
-      // }, (error) => {
-      //   console.error(error);
-      // });
   }
 
 
   addTask(form: NgForm) {
-    if (form.valid) {
-    }
+  
     const newTask = new EditableTask (
       this.addItemInput
     )

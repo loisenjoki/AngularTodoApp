@@ -1,13 +1,14 @@
 import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { AppComponent } from './app.component';
-import { TaskComponent } from './task/task.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {ApiService} from './services/api.service';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpErrorInterceptor } from './services/http-error.interceptor';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -15,18 +16,22 @@ import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TaskComponent
-    
+    AppComponent,    
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    MatCardModule
+    MatSnackBarModule,
+    NoopAnimationsModule
   ],
-  exports: [MatCardModule],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

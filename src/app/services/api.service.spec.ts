@@ -84,23 +84,30 @@ describe('ApiService', () => {
     req.flush(mockResponse);
   });
 
-  // it('should close a todo item', () => {
-
-  //   service.closeTask(todoId).subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-
-  //   // Expect a PATCH request to the correct URL with the correct headers and body
-  //   const req = httpMock.expectOne(`https://api.todoist.com/rest/v2/tasks/${todoId}/close`);
-  //   expect(req.request.method).toEqual('POST');
-  //   expect(req.request.headers.get('Authorization')).toEqual(`Bearer ${token}`);
-  //   expect(req.request.headers.get('Content-Type')).toEqual('application/json');
-  //   expect(req.request.body).toEqual({ completed: true });
-
-  //   // Return a mock response
-  //   const mockResponse = { success: true };
-  //   req.flush(mockResponse);
-  // });
+  it('should close a todo item', () => {
+    service.closeTask(todoId).subscribe(res => {
+      expect(res).toBeTruthy();
+    });
+    const req = httpMock.expectOne(`https://api.todoist.com/rest/v2/tasks/${todoId}/close`);
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.headers.get('Authorization')).toEqual(`Bearer ${token}`);
+    expect(req.request.headers.get('Content-Type')).toEqual('application/json');
+    expect(req.request.body).toEqual(null);
+    const mockResponse = { success: true };
+    req.flush(mockResponse);
+  });
+  it('should reopen a todo item', () => {
+    service.reopenTask(todoId).subscribe(res => {
+      expect(res).toBeTruthy();
+    });
+    const req = httpMock.expectOne(`https://api.todoist.com/rest/v2/tasks/${todoId}/reopen`);
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.headers.get('Authorization')).toEqual(`Bearer ${token}`);
+    expect(req.request.headers.get('Content-Type')).toEqual('application/json');
+    expect(req.request.body).toEqual(null);
+    const mockResponse = { success: true };
+    req.flush(mockResponse);
+  });
   
   it('should be created', () => {
     expect(service).toBeTruthy();

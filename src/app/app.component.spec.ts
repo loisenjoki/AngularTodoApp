@@ -1,31 +1,46 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ApiService } from '../app/services/api.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  let service: ApiService;
+  let httpMock: HttpTestingController;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
+      imports: [HttpClientTestingModule, HttpClientModule,FormsModule],
+      providers: [ApiService]
     }).compileComponents();
+    service = TestBed.inject(ApiService);
+    httpMock = TestBed.inject(HttpTestingController);
+    
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
 
-  it(`should have as title 'Angular Todo app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('Angular Todo app');
-  });
+  
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('todo app is running!');
+  });
+
+
+  
+
+  it('should have as title "Angular Todo app"', () => {
+    expect(component.title ).toEqual('Angular Todo app');
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 });

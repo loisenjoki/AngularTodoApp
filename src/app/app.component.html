@@ -1,27 +1,6 @@
 
 
-<!-- <div class="btn-wrapper">
-  <button
-    class="btn btn-menu"
-    [class.active]="filter == 'all'"
-    (click)="filter = 'all'">
-    All
-  </button>
-
-  <button
-    class="btn btn-menu"
-    [class.active]="filter == 'completed'"
-    (click)="filter = 'uncomplete'">
-    Uncompleted
-  </button>
-
-  <button
-    class="btn btn-menu"
-    [class.active]="filter == 'completed'"
-    (click)="filter = 'completed'">
-    Done
-  </button>
-</div> -->
+<!--  filter dropdown goes here -->
 <div class="main">
   <label>My To Do List</label>
 
@@ -29,34 +8,33 @@
     <li *ngFor="let item of tasks; let i = index">
       <div *ngIf="editingIndex !== i">
        <span> <input type="checkbox" [checked]="item === selectedItems" 
-        (change)="selectItem(item, $event)" [value]="isChecked ? 1 : 0"></span>
+        (change)="selectItem(item, $event)" [value]="isChecked ? 1 : 0" ></span>
         <span> {{item.content}} </span>
         <span> <button (click)="editItem(i)">Edit</button> </span>
         <span> <button  (click)="remove(item.id)">Delete</button> </span>
-
       </div>
+      <form #EditForm="ngForm" >
+
       <div *ngIf="editingIndex === i">
-        <input type="text" [(ngModel)]="editText" name="editText">
-        <button (click)="saveEditing(item.id)">Save</button>
+        <input type="text" [(ngModel)]="editText" name="editText" required>
+        <button (click)="saveEditing(item.id)" [disabled]="EditForm.invalid" >Save</button>
         <button (click)="cancelEditing()">Cancel</button>
       </div>
+      </form>
     </li>
   </ol>
   <form #myform="ngForm" (ngSubmit)="addTask(myform)">
     <div class="taskInput">
         <input
-      #newItem
       placeholder="add task"
       class="lg-text-input"
       required
-      name="addItemInput" [(ngModel)]="addItemInput"
+       name="addItemInput" [(ngModel)]="addItemInput"
       id="addItemInput" />
     </div>
-    <div>
-      <!-- <div *ngIf="myControl.errors.required">Field is required</div> -->
-    </div>
+    
       <div class="addBtn">
-        <button class="btn-warm" type="submit">Add</button>
+        <button class="btn-warm" [disabled]="myform.invalid" type="submit">Add</button>
       </div>
       </form>
 </div>
