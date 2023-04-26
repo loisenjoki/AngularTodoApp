@@ -1,7 +1,9 @@
 
 
 <!--  filter dropdown goes here -->
-<div class="main">
+
+<div class="container">
+  <div id="tasks">
   <label>My To Do List</label>
 
   <ol>
@@ -10,31 +12,42 @@
        <span> <input type="checkbox" [checked]="item === selectedItems" 
         (change)="selectItem(item, $event)" [value]="isChecked ? 1 : 0" ></span>
         <span> {{item.content}} </span>
-        <span> <button (click)="editItem(i)">Edit</button> </span>
-        <span> <button  (click)="remove(item.id)">Delete</button> </span>
-      </div>
-      <form #EditForm="ngForm" >
+        <span> <button class="edit" (click)="editItem(i)">Edit</button> </span>
+        <span> <button   class="delete"  (click)="remove(item.id)">Delete</button> </span>
+        <hr>
 
-      <div *ngIf="editingIndex === i">
-        <input type="text" [(ngModel)]="editText" name="editText" required>
-        <button (click)="saveEditing(item.id)" [disabled]="EditForm.invalid" >Save</button>
-        <button (click)="cancelEditing()">Cancel</button>
       </div>
-      </form>
+      <div class="newEdit">
+        <form #EditForm="ngForm" >
+          <div *ngIf="editingIndex === i">
+            <input type="text" [(ngModel)]="editText" name="editText" required>
+            <button (click)="saveEditing(item.id)" [disabled]="EditForm.invalid" >Save</button>
+            <button (click)="cancelEditing()">Cancel</button>
+          </div>
+          </form>
+      </div>
+     
     </li>
   </ol>
-  <form #myform="ngForm" (ngSubmit)="addTask(myform)">
-    <div class="taskInput">
-        <input
-      placeholder="add task"
-      class="lg-text-input"
-      required
-       name="addItemInput" [(ngModel)]="addItemInput"
-      id="addItemInput" />
-    </div>
-    
-      <div class="addBtn">
-        <button class="btn-warm" [disabled]="myform.invalid" type="submit">Add</button>
-      </div>
-      </form>
+  </div>
+  
+
+
+
+  <div id="newtask">
+    <form #myform="ngForm" (ngSubmit)="addTask(myform)">
+          <input
+        placeholder="add task"
+        class="lg-text-input"
+        required
+         name="addItemInput" [(ngModel)]="addItemInput"
+        id="addItemInput" />
+      
+          <button class="btn-warm" id="push" [disabled]="myform.invalid" type="submit">Add</button>
+        </form>
+  </div>
+ 
+
 </div>
+
+
