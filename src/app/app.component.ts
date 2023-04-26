@@ -30,7 +30,6 @@ export class AppComponent implements OnInit {
     this.apiconfig.data$.subscribe((
       data)=> {
          this.tasks = data;
-           console.log(this.tasks);
     },
       error => console.error(error)
     );  
@@ -42,10 +41,8 @@ export class AppComponent implements OnInit {
     const newTask = new EditableTask (
       this.addItemInput
     )
-    console.log(newTask);
     this.apiconfig.createTasks(newTask).subscribe((response: Task) => {
       this.tasks.push(response);
-      console.log(this.tasks);
   })
   }
 
@@ -63,7 +60,6 @@ export class AppComponent implements OnInit {
       )
       this.apiconfig.updateTasks( editData ,taskID)
       .subscribe((response: Task) => {
-            console.log(response);
         })
       
       
@@ -78,7 +74,6 @@ export class AppComponent implements OnInit {
         this.apiconfig.deleteTask(taskID).subscribe((response: Task) => {
           this.getallTasks();
 
-          console.log(response);
       })
       }
       //close reopen task
@@ -87,7 +82,6 @@ export class AppComponent implements OnInit {
         if(checkbox.checked){
           this.apiconfig.closeTask(item.id).subscribe((response: Task) => {
             this.getallTasks();
-            console.log(response);
         })
           //close task
 
