@@ -3,13 +3,14 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { ApiService } from './api.service';
 import { Task } from '../models/task';
+import { environment } from 'src/environments/environment';
 
 describe('ApiService', () => {
   let service: ApiService;
   let httpMock: HttpTestingController;
   const todoId = "6815702202";
-  const token = "887e23f9298ee74b7a89d69099420fc4cc9323e4"
-  const baseURL = "https://api.todoist.com/rest/v2/tasks/"
+  const token = environment.apiKey;
+  const baseURL =  environment.apiUrl;
   // let task:Task;
   let task: Task = {
     id: '',

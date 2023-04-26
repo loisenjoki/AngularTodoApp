@@ -1,9 +1,6 @@
 # AngularTodoApp
-Simple to-do app using angular
-=======
-# Todo
-
-# how to run
+Simple Angular Todo App
+# How to run
 Git clone this project
 Run `npm i`
 Run `ng serve`
