@@ -3,6 +3,21 @@ Simple to-do app using angular
 =======
 # Todo
 
+# how to run
+Git clone this project
+Run `npm i`
+Run `ng serve`
+
+## To run Test 
+run `ng test`
+run `ng test --include=src/app/services/api.service.spec.ts`
+
+
+
+
+# API connection
+Used the Todoist rest Api Documentation `https://developer.todoist.com/rest/v2/`
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
 
 ## Development server
